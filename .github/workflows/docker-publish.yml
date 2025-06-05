@@ -62,8 +62,12 @@ jobs:
       - name: Tag image for GHCR
         run: |
           docker tag ghcr-pr-${{ env.ENV }} ghcr.io/hungcurry/ghcr-pr-${{ env.ENV }}:latest
+          docker tag ghcr-pr-${{ env.ENV }} ghcr.io/hungcurry/ghcr-pr-${{ env.ENV }}:${{ github.sha }}
 
       - name: Push image to GHCR
         run: |
-          echo "📦 Pushing image to ghcr.io/hungcurry/ghcr-pr-${{ env.ENV }}:latest"
+          echo "📦 Pushing :latest"
           docker push ghcr.io/hungcurry/ghcr-pr-${{ env.ENV }}:latest
+
+          echo "📦 Pushing :${{ github.sha }}"
+          docker push ghcr.io/hungcurry/ghcr-pr-${{ env.ENV }}:${{ github.sha }}
